@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>School Stockの使い方と作り方｜GEG Asahikawa 2026.10.15</title>
-<meta name="description" content="GEG Asahikawa（2026年10月15日）の登壇資料です。小学校から高校まで使えるGeminiプロンプト集の使い方、プロンプトの4つの要素、出力の確かめ方をまとめています。">
+<meta name="description" content="GEG Asahikawa（2026年10月15日）の登壇資料です。忙しい先生が登録も会費もなしで使える教材とツールの置き場「School Stock」から、7つの教材と道具を板書の形で紹介します。">
 <link rel="canonical" href="https://a-tozak.github.io/geg-asahikawa/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="School Stockの使い方と作り方｜GEG Asahikawa">
-<meta property="og:description" content="小学校から高校まで使えるGeminiプロンプト集と、プロンプトの4つの要素、出力の確かめ方。">
+<meta property="og:description" content="忙しい先生が、登録も会費もなしで使える教材とツールの置き場。7つの教材と道具を板書で紹介します。">
 <meta property="og:url" content="https://a-tozak.github.io/geg-asahikawa/">
 <meta property="og:image" content="https://a-tozak.github.io/geg-asahikawa/og.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -19,42 +19,39 @@
 :root{
   --ink:#15181c;--black:#0e0f11;--paper:#fff;--wash:#f6f6f4;--line:#e6e6e3;--sub:#767b83;--accent:#2b5fd9;
   --font-ja:"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic Medium",sans-serif;
-  --font-mono:"SF Mono",Menlo,monospace;
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-ja);font-size:16px;line-height:1.8}
 a{color:var(--accent)}
-.wrap{max-width:760px;margin:0 auto;padding:0 16px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px}
 header{border-bottom:1px solid var(--line);padding:40px 0 32px}
 .eyebrow{font-size:13px;letter-spacing:.08em;color:var(--sub);margin:0 0 12px}
 h1{font-size:30px;line-height:1.4;margin:0 0 12px;color:var(--black);word-break:auto-phrase;text-wrap:balance}
 .by{margin:0;color:var(--sub);font-size:14px}
 section{padding:40px 0;border-bottom:1px solid var(--line)}
-h2{font-size:22px;line-height:1.5;margin:0 0 8px;color:var(--black);word-break:auto-phrase}
 .num{display:inline-block;font-size:13px;color:var(--accent);letter-spacing:.08em;margin-bottom:6px}
-h3{font-size:17px;margin:24px 0 8px;word-break:auto-phrase}
+h2{font-size:22px;line-height:1.5;margin:0 0 12px;color:var(--black);word-break:auto-phrase}
+h3{font-size:18px;margin:0 0 8px;word-break:auto-phrase}
 p{margin:0 0 12px}
-.lead{color:var(--ink)}
-ol.steps{list-style:none;padding:0;margin:20px 0 0;counter-reset:s}
-ol.steps>li{counter-increment:s;position:relative;padding:0 0 20px 44px}
-ol.steps>li::before{content:counter(s);position:absolute;left:0;top:2px;width:30px;height:30px;border-radius:50%;background:var(--black);color:#fff;font-size:14px;display:flex;align-items:center;justify-content:center}
-.btns{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin:12px 0 4px}
-.btn{display:block;text-align:center;text-decoration:none;border:1px solid var(--ink);color:var(--ink);padding:12px 8px;border-radius:6px;font-weight:600;font-size:15px;line-height:1.4}
-.btn small{display:block;font-weight:400;color:var(--sub);font-size:12px}
+.concept{font-size:20px;font-weight:700;color:var(--black);line-height:1.6;margin:8px 0 16px;word-break:auto-phrase}
+.frame{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--wash)}
+.frame iframe{display:block;width:100%;height:720px;border:0}
+.frame img,.board img{display:block;width:100%;height:auto}
+.only-wide{display:block}.only-narrow{display:none}
+@media (max-width:819px){.only-wide{display:none}.only-narrow{display:block}}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+.btn{display:inline-block;text-align:center;text-decoration:none;border:1px solid var(--ink);color:var(--ink);padding:10px 16px;border-radius:6px;font-weight:600;font-size:15px;line-height:1.4}
 .btn.primary{background:var(--black);color:#fff;border-color:var(--black)}
-.btn.primary small{color:#c9ccd1}
-.prompt{background:var(--wash);border:1px solid var(--line);border-radius:6px;padding:16px;font-size:14px;line-height:1.75;white-space:pre-wrap;margin:12px 0;overflow-wrap:anywhere}
-.tag{display:inline-block;font-size:12px;font-weight:700;color:#fff;background:var(--accent);border-radius:3px;padding:0 6px;margin-right:6px;vertical-align:1px}
-.hl{background:#e8eefc;border-radius:2px}
-table{width:100%;border-collapse:collapse;font-size:15px;margin:12px 0}
-th,td{text-align:left;vertical-align:top;border-top:1px solid var(--line);padding:10px 8px}
-th{white-space:nowrap;color:var(--black);width:7.5em}
-.copy{display:inline-block;margin-top:4px;border:1px solid var(--ink);background:#fff;color:var(--ink);padding:8px 16px;border-radius:6px;font-size:14px;font-family:inherit;cursor:pointer}
-.copy.done{background:var(--black);color:#fff}
+.tool{padding:28px 0;border-top:1px solid var(--line)}
+.tool:first-of-type{border-top:0}
+.tool .board{border:1px solid var(--line);border-radius:8px;overflow:hidden;margin:8px 0 0}
 .note{font-size:14px;color:var(--sub)}
 ul{padding-left:1.3em;margin:8px 0 12px}
 li{margin:2px 0}
+table{width:100%;border-collapse:collapse;font-size:15px;margin:12px 0}
+th,td{text-align:left;vertical-align:top;border-top:1px solid var(--line);padding:10px 8px}
+th{white-space:nowrap;color:var(--black);width:7em}
 footer{padding:32px 0 48px;font-size:13px;color:var(--sub)}
 @media (min-width:640px){h1{font-size:36px}}
 </style>
@@ -70,132 +67,99 @@ footer{padding:32px 0 48px;font-size:13px;color:var(--sub)}
 
 <main class="wrap">
 
-<section id="takeaway">
-  <span class="num">今夜の持ち帰り</span>
-  <h2>小学校から高校まで、同じ型で使えます</h2>
-  <ul>
-    <li>校種と教科から選べるGeminiのプロンプト集（小学校1,456本、中学校949本、高校701本、高校専門学科240本）</li>
-    <li>プロンプトを組み立てる4つの要素</li>
-    <li>Geminiの出力を授業で使う前に確かめる観点と、確かめるための依頼文</li>
-  </ul>
-  <p class="note">学校の端末でこのページが開けない場合は、スマートフォンでご覧ください。</p>
+<section id="zentai">
+  <span class="num">今日の全体像</span>
+  <h2>板書で見る、今日の45分</h2>
+  <p>板書は、School Stock の「マス目プリントメーカー」の板書計画の型で作りました。黒板の下のらんに、話すことを書いています。</p>
+  <div class="frame only-wide">
+    <iframe src="masume/?src=examples/geg-zentai.json" title="今日の全体像の板書（マス目プリントメーカー）" loading="lazy"></iframe>
+  </div>
+  <div class="frame only-narrow"><img src="img/geg-zentai.jpg" alt="今日の全体像の板書。まん中にSchool Stock、左に紙で使う3つ、右に画面で使う3つ、下にコンセプト" width="1600" height="1132"></div>
+  <div class="btns"><a class="btn" href="masume/?src=examples/geg-zentai.json" target="_blank" rel="noopener">マス目プリントメーカーで開く</a></div>
 </section>
 
-<section id="handson">
-  <span class="num">ハンズオン（約15分）</span>
-  <h2>1本選んで、Geminiで動かしてみます</h2>
-  <ol class="steps">
-    <li>
-      <strong>ご自身の校種を開きます。</strong>
-      <div class="btns">
-        <a class="btn" href="https://a-tozak.github.io/School_Stock/ai/es.html" target="_blank" rel="noopener">小学校<small>1,456本</small></a>
-        <a class="btn" href="https://a-tozak.github.io/School_Stock/ai/jhs.html" target="_blank" rel="noopener">中学校<small>949本</small></a>
-        <a class="btn" href="https://a-tozak.github.io/School_Stock/ai/hs.html" target="_blank" rel="noopener">高等学校<small>701本</small></a>
-        <a class="btn" href="https://a-tozak.github.io/School_Stock/ai/hs-senmon.html" target="_blank" rel="noopener">高校 専門学科<small>240本</small></a>
-      </div>
-    </li>
-    <li><strong>教科と、次の授業で使う場面を1つ選び、プロンプトをコピーします。</strong><br>単元の計画、本時の展開、発問づくりなどから選べます。</li>
-    <li><strong>〔　〕の部分を、ご自身の学年や単元に書き換えます。</strong><br>各プロンプトの下に、書き換えた例と出力の例があります。</li>
-    <li>
-      <strong>Geminiに貼って実行します。</strong>
-      <div class="btns"><a class="btn primary" href="https://gemini.google.com/" target="_blank" rel="noopener">Geminiを開く<small>gemini.google.com</small></a></div>
-    </li>
-    <li><strong>出てきた答えを、下の「確かめる観点」で見ます。</strong><br>使えそうな所と、直したい所を1つずつチャットで教えてください。</li>
-  </ol>
-  <h3>小学校の先生へ</h3>
-  <p>プリントの棚もあります。ふりかえり宿題は、前の学年までに習ったことを確かめる内容なので、教科書の単元の順番に左右されにくい作りです。</p>
-  <div class="btns">
-    <a class="btn" href="https://a-tozak.github.io/School_Stock/prints/furikaeri/" target="_blank" rel="noopener">ふりかえり宿題</a>
-    <a class="btn" href="https://a-tozak.github.io/School_Stock/prints/" target="_blank" rel="noopener">プリントの棚</a>
-    <a class="btn" href="https://a-tozak.github.io/School_Stock/tools/" target="_blank" rel="noopener">ツールの棚</a>
+<section id="about">
+  <span class="num">1　School Stockとは</span>
+  <h2>忙しい先生のための、教材とツールの置き場</h2>
+  <p class="concept">忙しい先生が、登録も会費もなしで使える教材とツールの置き場です。</p>
+  <ul>
+    <li>先生たちの時短につながればと思って作っています。</li>
+    <li>自分や周りの先生が困っていることから作り始め、AIを使って、作る、使う、直すをくり返しています。</li>
+    <li>完璧なものではありません。現場の先生なら少し直して使える、という感覚で作っています。</li>
+    <li>2026年7月末から数え始めて、ページは約4万回開かれ、教材は約2万回保存されています。</li>
+  </ul>
+  <div class="btns"><a class="btn primary" href="https://a-tozak.github.io/School_Stock/" target="_blank" rel="noopener">School Stockを開く</a></div>
+</section>
+
+<section id="tools">
+  <span class="num">2　見てもらう・触ってもらう</span>
+  <h2>おすすめの7つ</h2>
+  <p>それぞれの板書は、左が困りごと、まん中がどんな道具か、右が使い方です。気になったものを開いて、触ってみてください。</p>
+
+  <div class="tool">
+    <h3>① ふりかえりプリント</h3>
+    <div class="board"><img src="img/geg-1-furikaeri.jpg" alt="ふりかえりプリントの板書" loading="lazy" width="1600" height="1132"></div>
+    <div class="btns"><a class="btn primary" href="https://a-tozak.github.io/School_Stock/prints/furikaeri/" target="_blank" rel="noopener">プリントを開く</a><a class="btn" href="masume/?src=examples/geg-1-furikaeri.json" target="_blank" rel="noopener">板書を開く</a></div>
+  </div>
+
+  <div class="tool">
+    <h3>② つかえるシリーズ</h3>
+    <div class="board"><img src="img/geg-2-tsukaeru.jpg" alt="つかえるシリーズの板書" loading="lazy" width="1600" height="1132"></div>
+    <div class="btns"><a class="btn primary" href="https://a-tozak.github.io/School_Stock/prints/tsukaeru/" target="_blank" rel="noopener">プリントを開く</a><a class="btn" href="masume/?src=examples/geg-2-tsukaeru.json" target="_blank" rel="noopener">板書を開く</a></div>
+  </div>
+
+  <div class="tool">
+    <h3>③ デジタル国語辞典</h3>
+    <div class="board"><img src="img/geg-3-jiten.jpg" alt="デジタル国語辞典の板書" loading="lazy" width="1600" height="1132"></div>
+    <div class="btns"><a class="btn primary" href="https://a-tozak.github.io/digital-kokugo-jiten/" target="_blank" rel="noopener">辞典を開く</a><a class="btn" href="masume/?src=examples/geg-3-jiten.json" target="_blank" rel="noopener">板書を開く</a></div>
+  </div>
+
+  <div class="tool">
+    <h3>④ マス目プリントメーカー</h3>
+    <div class="board"><img src="img/geg-4-masume.jpg" alt="マス目プリントメーカーの板書" loading="lazy" width="1600" height="1132"></div>
+    <div class="btns"><a class="btn primary" href="https://a-tozak.github.io/School_Stock/tools/masume-print/" target="_blank" rel="noopener">道具を開く</a><a class="btn" href="masume/?src=examples/geg-4-masume.json" target="_blank" rel="noopener">板書を開く</a></div>
+  </div>
+
+  <div class="tool">
+    <h3>⑤ デジタルそろばん</h3>
+    <div class="board"><img src="img/geg-5-soroban.jpg" alt="デジタルそろばんの板書" loading="lazy" width="1600" height="1132"></div>
+    <div class="btns"><a class="btn primary" href="https://a-tozak.github.io/digital-soroban/" target="_blank" rel="noopener">そろばんを開く</a><a class="btn" href="masume/?src=examples/geg-5-soroban.json" target="_blank" rel="noopener">板書を開く</a></div>
+  </div>
+
+  <div class="tool">
+    <h3>⑥ 3年社会 デジタル副読本</h3>
+    <div class="board"><img src="img/geg-6-fukudokuhon.jpg" alt="3年社会 デジタル副読本の板書" loading="lazy" width="1600" height="1132"></div>
+    <div class="btns"><a class="btn primary" href="https://a-tozak.github.io/iizuka-fukudokuhon/" target="_blank" rel="noopener">副読本を開く</a><a class="btn" href="https://a-tozak.github.io/School_Stock/ideas/a/iizuka-fukudokuhon.html" target="_blank" rel="noopener">作り方の記事</a><a class="btn" href="masume/?src=examples/geg-6-fukudokuhon.json" target="_blank" rel="noopener">板書を開く</a></div>
+  </div>
+
+  <div class="tool">
+    <h3>⑦ イラスト素材集</h3>
+    <div class="board"><img src="img/geg-7-sozai.jpg" alt="イラスト素材集の板書" loading="lazy" width="1600" height="1132"></div>
+    <div class="btns"><a class="btn primary" href="https://a-tozak.github.io/School_Stock/sozai/" target="_blank" rel="noopener">素材集を開く</a><a class="btn" href="masume/?src=examples/geg-7-sozai.json" target="_blank" rel="noopener">板書を開く</a></div>
   </div>
 </section>
 
-<section id="kata">
-  <span class="num">プロンプトの型</span>
-  <h2>4つの要素で組み立てます</h2>
-  <p>Geminiが「それらしいけれど使えない」答えを返すときは、たいてい条件か出力の形が書かれていません。プロンプト集はすべて、次の4つの要素でできています。</p>
+<section id="kankyo">
+  <span class="num">3　開発環境とこれから</span>
+  <h2>どうやって作っているか</h2>
   <table>
-    <tr><th>役割</th><td>誰として答えるかを決めます。校種、学年、教科まで書きます。</td></tr>
-    <tr><th>条件</th><td>守ってほしいことを箇条書きにします。時数、学習指導要領の見方・考え方、避けたいことなどです。</td></tr>
-    <tr><th>出力形式</th><td>答えの見出しと順番を先に決めます。そのまま指導案や学年会の資料に写せる形にします。</td></tr>
-    <tr><th>差し替え欄</th><td>〔　〕にした所だけを書き換えれば、別の学年や単元でも使えます。</td></tr>
+    <tr><th>生成AI</th><td>Claude Code で、教材の中身を作り、紙面に組み、PDFに書き出しています。</td></tr>
+    <tr><th>文字</th><td>紙面の文字はモリサワのフォントで組んでいます。</td></tr>
+    <tr><th>公開</th><td>GitHub Pages で公開しています。このページも同じです。</td></tr>
+    <tr><th>プロンプト</th><td>役割、条件、出力の形、差し替える欄を決めて頼んでいます。</td></tr>
   </table>
-  <h3>例：中学校1年 数学「数と式」の単元の計画</h3>
-  <div class="prompt"><span class="tag">役割</span><span class="hl">あなたは中学校〔1〕年の数学担当です。</span>
-数学「数と式」の単元〔単元名〕の計画を立ててください。
-
-# この学年でおさえること
-正の数と負の数、文字を用いた式、一次方程式。
-
-<span class="tag">条件</span># 条件
-・生徒が数学的な見方・考え方を働かせる場面が、どの時間のどこにあるかを明示する
-・活動を並べるのではなく、前の時間で分かったことが次の時間の問いになる並びにする
-・全〔時数〕時間。1時間ごとに「この時間で生徒ができるようになること」を1行で書く
-
-<span class="tag">出力形式</span># 出力形式
-・単元の目標／各時間の問いと活動（時数つき）／数学的な見方・考え方が働く場面／単元末に生徒が書くことの指示文
-
-<span class="tag">差し替え欄</span>〔単元名〕＝正の数・負の数の四則計算　〔時数〕＝10</div>
-  <p class="note">School Stock 中学校プロンプト集から引用しています。</p>
-</section>
-
-<section id="kakunin">
-  <span class="num">出力を確かめる</span>
-  <h2>授業で使う前に見る5つの観点</h2>
-  <ol>
-    <li>事実、数値、用語が正しいか。教科書と照らし合わせます。</li>
-    <li>その学年で扱う内容を超えていないか。</li>
-    <li>プロンプトの条件（時数、出力の形）を守っているか。</li>
-    <li>そのまま児童生徒に示せる言葉になっているか。</li>
-    <li>授業者として考えている授業のねらいと、ずれていないか。</li>
-  </ol>
-  <h3>Geminiに確かめさせる依頼文</h3>
-  <p>出力を受け取った同じ会話で、続けて貼ります。〔　〕を書き換えてください。</p>
-  <div class="prompt" id="kenpin">あなたは〔中学校数学〕の教科書の編集者です。
-直前の出力を、授業で使う前の点検として読み直してください。
-
-# 点検の観点
-・事実、数値、用語の誤り
-・〔中学校1年〕で扱う内容を超えている所
-・プロンプトの条件を守っていない所
-・児童生徒にそのまま示すと誤解を生む言葉
-
-# 出力形式
-・問題のある箇所だけを、引用、理由、直し方の3つで示す
-・問題がなければ「問題なし」とだけ書く</div>
-  <button class="copy" data-target="kenpin">依頼文をコピーする</button>
-  <p class="note" style="margin-top:12px">AIによる点検も間違えることがあります。最後は授業者が自分の目で確かめてください。</p>
-
-  <h3>Geminiに入力しない情報</h3>
-  <ul>
-    <li>児童生徒の氏名、写真、成績、個別の記録</li>
-    <li>保護者や家庭に関する情報</li>
-    <li>学校の内部文書や、外に出していない会議資料</li>
-    <li>教科書の本文や市販の問題集を、そのまま貼り付けること</li>
-  </ul>
-  <p class="note">扱いは各自治体と学校のガイドラインに従ってください。</p>
-</section>
-
-<section id="ura">
-  <span class="num">作り方</span>
-  <h2>School Stockの裏側</h2>
-  <table>
-    <tr><th>生成AI</th><td>Claude Codeで、教材の中身のデータを作り、紙面に組み、PDFに書き出しています。プロンプト集の型はGeminiで動くように作っています。</td></tr>
-    <tr><th>フォント</th><td>紙面の文字はモリサワのフォントで組んでいます。</td></tr>
-    <tr><th>公開</th><td>GitHub Pagesで公開しています。</td></tr>
-    <tr><th>公開前の確認</th><td>公開する前に、自分の目で1枚ずつ見ています。教科書や市販の問題集の転載は載せません。教科の専門家役と、つまずき方の違う児童役のAIにも確かめさせています。</td></tr>
-  </table>
+  <h3>これから</h3>
+  <p>今は自費で作り、維持しています。この形のままでは長く続けられないので、予算をつけていただけたらと考えています。</p>
 </section>
 
 <section id="links">
   <span class="num">リンク</span>
   <h2>School Stock</h2>
   <div class="btns">
-    <a class="btn primary" href="https://a-tozak.github.io/School_Stock/" target="_blank" rel="noopener">School Stockを開く<small>無料の教材の棚</small></a>
-    <a class="btn" href="https://a-tozak.github.io/School_Stock/ai/" target="_blank" rel="noopener">プロンプト集の入口</a>
+    <a class="btn primary" href="https://a-tozak.github.io/School_Stock/" target="_blank" rel="noopener">School Stockを開く</a>
+    <a class="btn" href="https://a-tozak.github.io/School_Stock/soudan/" target="_blank" rel="noopener">先生の相談窓口</a>
   </div>
-  <p class="note">あとで探すときは「School Stock 教材」で検索してください。</p>
+  <p class="note" style="margin-top:12px">あとで探すときは「School Stock 教材」で検索してください。学校の端末でこのページが開けない場合は、スマートフォンでご覧ください。</p>
 </section>
 
 </main>
@@ -203,16 +167,5 @@ footer{padding:32px 0 48px;font-size:13px;color:var(--sub)}
 <footer>
   <div class="wrap">GEG Asahikawa 2026年10月15日 登壇資料／© School Stock 外﨑顯博</div>
 </footer>
-
-<script>
-document.querySelectorAll('.copy').forEach(function(b){
-  b.addEventListener('click',function(){
-    var t=document.getElementById(b.dataset.target).innerText;
-    var done=function(){b.textContent='コピーしました';b.classList.add('done');setTimeout(function(){b.textContent='依頼文をコピーする';b.classList.remove('done')},2000)};
-    if(navigator.clipboard){navigator.clipboard.writeText(t).then(done,function(){fallback(t);done()})}else{fallback(t);done()}
-  });
-});
-function fallback(t){var a=document.createElement('textarea');a.value=t;document.body.appendChild(a);a.select();try{document.execCommand('copy')}catch(e){}document.body.removeChild(a)}
-</script>
 </body>
 </html>

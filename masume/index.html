@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="description" content="マス目に1字ずつ入るプリントを、ブラウザで作って刷る道具です。縦書き、原稿用紙のきまり、筆算、分数の式に対応しています。">
+<title>マス目プリントメーカー</title>
+<link rel="manifest" href="/School_Stock/manifest.webmanifest">
+<meta name="theme-color" content="#0e0f11">
+<link rel="apple-touch-icon" href="/School_Stock/assets/favicon-180.png">
+<meta name="apple-mobile-web-app-title" content="School Stock">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="School Stock">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:title" content="マス目プリントメーカー｜School Stock">
+<meta property="og:description" content="マス目に1字ずつ字が入るプリントやノートを、ブラウザで作れる無料の道具です。縦書き、原稿用紙のきまり、筆算、分数の式、英語の4線、計算プリント、漢字練習に対応。A4とB4、PDFと画像で保存できます。登録もインストールもいりません。">
+<meta property="og:url" content="https://a-tozak.github.io/School_Stock/tools/masume-print/">
+<meta property="og:image" content="https://a-tozak.github.io/School_Stock/tools/masume-print/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="マス目のプリントに鉛筆で書きこむ手元の水彩画と、マス目プリントメーカーの名前">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%2329527a'/%3E%3Cpath d='M8 8h16v16H8zM8 13.3h16M8 18.7h16M13.3 8v16M18.7 8v16' fill='none' stroke='%23fff' stroke-width='1.6'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/app.bundle.css?v=31bd2cce">
+<link rel="preload" as="image" href="assets/lp/loading.webp" type="image/webp">
+<style>
+/* ---------- 読みこみ中の画面 ----------
+ * すぐ開けたときに ちらつかないように、0.3秒たってから見せる。絵は野々宮すみれの水彩。 */
+.loading { position: fixed; inset: 0; z-index: 200; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; background: #fff; opacity: 1; transition: opacity .3s; }
+.loading img, .loading p { opacity: 0; animation: loading-in .4s ease .3s forwards; }
+.loading img { width: min(220px, 50vw); height: auto; mix-blend-mode: multiply; }
+.loading p { margin: 0; font-size: 14px; letter-spacing: .12em; color: #5a6069; }
+.loading p::after { content: "…"; display: inline-block; width: 1em; text-align: left; animation: loading-dots 1.2s steps(4, end) infinite; overflow: hidden; vertical-align: bottom; }
+.loading.out { opacity: 0; pointer-events: none; }
+@keyframes loading-in { to { opacity: 1; } }
+@keyframes loading-dots { from { width: 0; } to { width: 1em; } }
+@media (prefers-reduced-motion: reduce) { .loading p::after { animation: none; } }
+@media print { .loading { display: none !important; } }
+body.shot .loading { display: none; }
+</style>
+<style id="page-rule"></style>
+</head>
+<body>
+
+<div id="loading" class="loading" role="status" aria-live="polite">
+  <img src="assets/lp/loading.webp" alt="" width="220" height="220" decoding="async">
+  <p>読みこんでいます</p>
+</div>
+
+<header class="bar">
+  <div class="name">マス目プリントメーカー<small>試作</small></div>
+  <input id="doc-title" class="title" type="text" aria-label="プリントの名前" spellcheck="false">
+<button id="btn-tpl" type="button" class="btn tpl-btn" title="ノートやテンプレートの一覧を開く">テンプレート</button>
+  <select id="tpl" hidden aria-hidden="true"><option value=""></option></select>
+  <label class="paper-pick">用紙
+    <select id="paper" aria-label="用紙の大きさと向き"></select>
+  </label>
+  <a class="about-link" href="about.html" target="_blank" rel="noopener">使い方と事例</a>
+  <div class="sp"></div>
+  <div class="cluster">
+    <button id="btn-undo" type="button" class="btn ghost" title="元に戻す（⌘Z / Ctrl+Z）">元に戻す</button>
+    <button id="btn-redo" type="button" class="btn ghost" title="やり直す（⌘⇧Z / Ctrl+Y）">やり直す</button>
+  </div>
+  <div class="cluster zoom">
+    <button id="zoom-out" type="button" class="btn ghost sq" aria-label="縮小">−</button>
+    <span id="zoom-val">100%</span>
+    <button id="zoom-in" type="button" class="btn ghost sq" aria-label="拡大">＋</button>
+    <button id="zoom-page" type="button" class="btn ghost" title="1ページ全体が見える大きさにする">全体</button>
+    <button id="zoom-fit" type="button" class="btn ghost" title="紙の幅を画面の幅に合わせる">ページ幅</button>
+  </div>
+  <div class="cluster">
+    <button id="btn-open" type="button" class="btn ghost">開く</button>
+    <button id="btn-save" type="button" class="btn ghost" title="PDF や画像で保存（⌘S / Ctrl+S）" aria-haspopup="menu">保存 ▾</button>
+    <button id="btn-print" type="button" class="btn primary">印刷</button>
+  </div>
+</header>
+
+<div id="panel" class="panel ribbon" aria-label="書式の設定"></div>
+
+<div class="work">
+  <nav id="tools" class="tools" aria-label="挿入"></nav>
+  <main id="stage" class="stage"><div id="pages"></div></main>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<textarea id="ime" aria-label="マス目に入れる文字" autocomplete="off" autocapitalize="off" spellcheck="false" tabindex="-1"></textarea>
+<input id="file-open" type="file" accept=".json,application/json" hidden>
+<input id="file-image" type="file" accept="image/*" hidden>
+<input id="file-font" type="file" accept=".ttf,.otf,.woff,.woff2" hidden>
+
+<script src="assets/app.bundle.js?v=54f38e31"></script>
+</body>
+</html>
