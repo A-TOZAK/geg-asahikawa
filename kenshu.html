@@ -37,6 +37,8 @@ p{margin:0 0 12px}
 .concept{font-size:20px;font-weight:700;color:var(--black);line-height:1.6;margin:8px 0 16px;word-break:auto-phrase}
 .frame{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--wash)}
 .frame iframe{display:block;width:100%;height:720px;border:0}
+.facade2{position:relative;display:block;width:100%;padding:0;border:0;background:none;cursor:pointer}
+.facade2 .play{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:var(--black);color:#fff;font-weight:700;font-size:15px;padding:10px 20px;border-radius:999px}
 .frame img,.board img{display:block;width:100%;height:auto}
 .only-wide{display:block}.only-narrow{display:none}
 @media (max-width:819px){.only-wide{display:none}.only-narrow{display:block}}
@@ -72,8 +74,8 @@ footer{padding:32px 0 48px;font-size:13px;color:var(--sub)}
   <span class="num">今日の全体像</span>
   <h2>板書で見る、今日の45分</h2>
   <p>板書は、School Stock の「マス目プリントメーカー」の板書計画の型で作りました。黒板の下のらんに、話すことを書いています。</p>
-  <div class="frame only-wide">
-    <iframe src="masume/?src=examples/geg-zentai.json" title="今日の全体像の板書（マス目プリントメーカー）" loading="lazy"></iframe>
+  <div class="frame only-wide" id="zentai-frame">
+    <button type="button" class="facade2" id="zentai-open"><img src="img/geg-zentai.jpg" alt="今日の全体像の板書" width="1600" height="1132"><span class="play">このページで編集できる形にする</span></button>
   </div>
   <div class="frame only-narrow"><img src="img/geg-zentai.jpg" alt="今日の全体像の板書。まん中にSchool Stock、左に紙で使う3つ、右に画面で使う3つ、下にコンセプト" width="1600" height="1132"></div>
   <div class="btns"><a class="btn" href="masume/?src=examples/geg-zentai.json" target="_blank" rel="noopener">マス目プリントメーカーで開く</a></div>
@@ -169,5 +171,11 @@ footer{padding:32px 0 48px;font-size:13px;color:var(--sub)}
 <footer>
   <div class="wrap">GEG Asahikawa 2026年10月15日 登壇資料／© School Stock 外﨑顯博</div>
 </footer>
+<script>
+document.getElementById('zentai-open').addEventListener('click',function(){
+  var f=document.createElement('iframe');f.src='masume/?src=examples/geg-zentai.json';f.title='今日の全体像の板書（マス目プリントメーカー）';
+  var w=document.getElementById('zentai-frame');w.innerHTML='';w.appendChild(f);
+});
+</script>
 </body>
 </html>

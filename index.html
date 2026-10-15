@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>アプリ・教材開発の極意とその運用｜GEG Asahikawa × GEG Chikuho</title>
 <meta name="description" content="GEG Asahikawa × GEG Chikuho（2026年10月15日）の入口です。思考ツールボードの今日の地図、研修のサイト、Googleスライド、School Stockをここから開けます。">
+<link rel="preconnect" href="https://docs.google.com">
 <link rel="canonical" href="https://a-tozak.github.io/geg-asahikawa/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="アプリ・教材開発の極意とその運用｜GEG Asahikawa × GEG Chikuho">
@@ -30,6 +31,9 @@ h1{font-size:28px;line-height:1.4;margin:0 0 8px;color:var(--black);word-break:a
 .by{margin:0;color:var(--sub);font-size:14px}
 .slide-embed{position:relative;width:100%;aspect-ratio:16/9;background:#000;border-radius:12px;overflow:hidden;border:1px solid var(--line)}
 .slide-embed iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.facade{position:absolute;inset:0;width:100%;height:100%;padding:0;border:0;background:#000;cursor:pointer}
+.facade img{width:100%;height:100%;object-fit:contain;display:block}
+.facade .play{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);background:var(--black);color:#fff;font-weight:700;font-size:15px;padding:10px 20px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.25)}
 .slide-cap{font-size:13px;color:var(--sub);margin:8px 0 20px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:8px 0 24px}
 .card{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:22px 22px 20px;transition:border-color .15s}
@@ -51,7 +55,7 @@ footer{padding:0 0 40px;font-size:12px;color:var(--sub)}
   .card.main{flex-direction:column;align-items:stretch}
   .card.main img{width:100%;max-width:none}
   /* スマホは Googleスライド と School Stock を先に出す */
-  .sp1{order:1}.sp2{order:2}.pcfirst{order:3}
+  .sp1{order:1}.sp2{order:2}.sp3{order:3}.pcfirst{order:4}
   .sp-note{display:block;font-size:13px;color:var(--sub);margin:0 0 8px}
 }
 </style>
@@ -66,10 +70,13 @@ footer{padding:0 0 40px;font-size:12px;color:var(--sub)}
 </header>
 
 <main class="wrap">
-  <div class="slide-embed">
-    <iframe src="https://docs.google.com/presentation/d/18UdOzN5UuKGKfBk3mgA3N4yXb_0v9l1oWRyWBSZbbZs/embed?start=false&amp;loop=false&amp;delayms=3000" title="今日のスライド（Googleスライド）" allowfullscreen></iframe>
+  <div class="slide-embed" id="slide">
+    <button type="button" class="facade" id="slide-open" aria-label="スライドをここに表示する">
+      <img src="img/slide-cover.jpg" alt="スライドの表紙。アプリ・教材開発の極意とその運用" width="960" height="540">
+      <span class="play">スライドを表示する</span>
+    </button>
   </div>
-  <p class="slide-cap">書きこむときは、下の「Googleスライド」のカードから開いてください。</p>
+  <p class="slide-cap">押すと、ここでスライドをめくれます。書きこむときは、下の「Googleスライド」のカードから開いてください。</p>
   <p class="sp-note">スマートフォンの方は、Googleスライド と School Stock をお使いください。思考ツールボードと研修のサイトは、パソコンで開くと見やすくなります。</p>
   <div class="grid">
     <a class="card main pcfirst" href="board/?tpl=geg-asahikawa" target="_blank" rel="noopener">
@@ -80,6 +87,12 @@ footer{padding:0 0 40px;font-size:12px;color:var(--sub)}
         <span class="d">今日の資料と7つの道具、それぞれの板書がつながっています。四角の右上の印を押すと、その先が開きます。書き足しても、ほかの方の画面には出ません。</span>
         <span class="go">ボードを開く</span>
       </span>
+    </a>
+    <a class="card sp3" href="gaiyou.html">
+      <span class="k">話の概要</span>
+      <span class="t">今日の話をまとめた文章</span>
+      <span class="d">School Stock をどう作り、どう使っているかを、あとから読み返せるようにまとめました。</span>
+      <span class="go">読む</span>
     </a>
     <a class="card pcfirst" href="kenshu.html">
       <span class="k">研修のサイト<span class="pc">パソコン向け</span></span>
@@ -106,5 +119,13 @@ footer{padding:0 0 40px;font-size:12px;color:var(--sub)}
 <footer>
   <div class="wrap">© School Stock 外﨑顯博</div>
 </footer>
+<script>
+document.getElementById('slide-open').addEventListener('click',function(){
+  var f=document.createElement('iframe');
+  f.src='https://docs.google.com/presentation/d/18UdOzN5UuKGKfBk3mgA3N4yXb_0v9l1oWRyWBSZbbZs/embed?start=false&loop=false&delayms=3000';
+  f.title='今日のスライド（Googleスライド）';f.allowFullscreen=true;
+  var w=document.getElementById('slide');w.innerHTML='';w.appendChild(f);
+});
+</script>
 </body>
 </html>
